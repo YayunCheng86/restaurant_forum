@@ -6,6 +6,7 @@ const db = require('./models')
 const bodyParser = require('body-parser') 
 const session = require('express-session')
 const flash = require('connect-flash')
+const passport = require('./config/passport')
 
 // express-handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -16,6 +17,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // session
 app.use(session({ secret: 'covid-19', resave: false, saveUninitialized: false }))
+
+// passport
+app.use(passport.initialize())
+app.use(passport.session())
 
 // flash
 app.use(flash())
@@ -32,4 +37,4 @@ app.listen(port, () => {
     console.log('App is listening.')
 })
 
-require('./routes')(app)
+require('./routes')(app, passport)
