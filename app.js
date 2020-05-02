@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
 
 // express-handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -14,6 +15,9 @@ app.set('view engine', 'handlebars')
 
 // body-parser
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// method-override
+app.use(methodOverride('_method'))
 
 // session
 app.use(session({ secret: 'covid-19', resave: false, saveUninitialized: false }))
