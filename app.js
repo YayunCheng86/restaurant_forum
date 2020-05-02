@@ -9,6 +9,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.listen(port, () => {
+    db.sequelize.sync()
     console.log('App is listening.')
 })
 
