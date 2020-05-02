@@ -1,6 +1,13 @@
+const db = require('../models')
+const Resaturant = db.Resaturant
+
 const adminController = {
     getRestaurants: (req, res) => {
-        return res.render('admin/restaurants')
+        Resaturant.findAll({ raw: true })
+        .then(restaurants => {
+            return res.render('admin/restaurants', { restaurants })
+        })
+        
     }
 }
 
