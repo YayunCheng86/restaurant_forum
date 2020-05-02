@@ -13,6 +13,9 @@ const methodOverride = require('method-override')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+//static file 
+app.use('/upload', express.static(__dirname + '/upload'))
+
 // body-parser
 app.use(bodyParser.urlencoded({ extended: true }))
 
