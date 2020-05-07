@@ -13,7 +13,10 @@ if(process.env.NODE_ENV !== 'production') {
 }
 
 // express-handlebars
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({ 
+    defaultLayout: 'main',
+    helpers: require('./config/handlebars-helper')
+}))
 app.set('view engine', 'handlebars')
 
 //static file 
