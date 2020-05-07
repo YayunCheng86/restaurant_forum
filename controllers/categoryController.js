@@ -10,6 +10,19 @@ let categoryController = {
             return res.render('admin/categories', { categories: categories })
         })
     },
+    postCategory: (req, res) => {
+        if (!req.body.name) {
+            req.flash('error_messages', 'categorty\'s name is required.')
+            return res.redirect('back')
+        } else {
+            return Category.create({
+                name: req.body.name
+            })
+                .then((category) => {
+                    res.redirect('/admin/categories')
+                })
+        }
+    },
 }
 
 module.exports = categoryController
