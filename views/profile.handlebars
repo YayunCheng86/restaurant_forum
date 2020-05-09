@@ -18,8 +18,10 @@
         {{#if comments }}
         {{#each comments}}
         <div class="d-flex flex-column col-2">
-            <img style="width: auto; height:100px;" src="{{this.Restaurant.image}}" alt="">
-            <p>{{this.Restaurant.name}}</p>
+            <a href="/restaurants/{{this.Restaurant.id}}">
+                <img style="width: auto; height:100px;" src="{{this.Restaurant.image}}" alt="">
+                <p>{{this.Restaurant.name}}</p>
+            </a>
         </div>
         {{/each}}
         {{else}}
