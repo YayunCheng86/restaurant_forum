@@ -1,5 +1,7 @@
 const db = require('../models')
 const User = db.User
+const Restaurant = db.Restaurant
+const Comment = db.Comment
 const bcrypt = require('bcryptjs')
 const fs = require('fs')
 const imgur = require('imgur-node-api')
@@ -47,7 +49,15 @@ const userController = {
     getUser: (req, res) => {
         User.findByPk(req.params.id)
         .then(user => {
-            return res.render('profile', { user: user.toJSON() })
+            Comment.findAll({
+                where: { UserId: req.params.id },
+                raw: true,
+                nest: true,
+                include: [Restaurant]
+            }).then(comments => {
+                console.log(comments)
+                return res.render('profile', { user: user.toJSON(), comments })
+            })
         })
     },
     editUser: (req, res) => {

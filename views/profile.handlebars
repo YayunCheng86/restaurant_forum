@@ -1,4 +1,4 @@
-<div class="profile-panel d-flex align-items-center">
+<div class="profile-panel d-flex align-items-center row">
     <img class="mr-3" style="width: 400px; height: 400px;" src="{{ user.image }}" alt="">
     
     <div class="detail d-flex flex-column">
@@ -10,4 +10,20 @@
             </button>
         </a>
     </div>
+</div>
+
+<div class="commented-restaurants mt-5 row d-flex flex-column">
+    <h4 class="col-12">{{user.name}} 已評論過的餐廳：</h4>
+    <div class="row restaurants d-flex align-items-center"> 
+        {{#if comments }}
+        {{#each comments}}
+        <div class="d-flex flex-column col-2">
+            <img style="width: auto; height:100px;" src="{{this.Restaurant.image}}" alt="">
+            <p>{{this.Restaurant.name}}</p>
+        </div>
+        {{/each}}
+        {{else}}
+        <div class="col-12 d-flex justify-content-center">尚未新增評論</div>
+        {{/if}}
+    </div>    
 </div>

@@ -141,11 +141,6 @@ const adminController = {
     getUsers: (req, res) => {
         return User.findAll({ raw: true })
         .then(users => {
-            // isAdmin value 改為true or false
-            users.forEach(user => {
-                if(user.isAdmin === 1) user.isAdmin = true
-                else user.isAdmin = false
-            })
             return res.render('admin/users', { users })
         })
     },
