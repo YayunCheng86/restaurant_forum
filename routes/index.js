@@ -53,7 +53,7 @@ module.exports = (app, passport) => {
     app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
     app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
-    // 前台 user profile
+    // user profile
     app.get('/users/:id', authenticated, userController.getUser)
     app.get('/users/:id/edit', authenticated, userAuth, userController.editUser)
     app.put('/users/:id', authenticated, userAuth, upload.single('image'), userController.putUser)
@@ -61,6 +61,10 @@ module.exports = (app, passport) => {
     // 留言
     app.post('/comments', authenticated, commentController.postComment)
     app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
+    
+    // favorite
+    app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+    app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
 
     // 註冊
     app.get('/signup', userController.signUpPage)
