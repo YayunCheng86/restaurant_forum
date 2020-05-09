@@ -29,7 +29,9 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((id, cb) => {
     User.findByPk(id).then(user => {
         return cb(null, user.get())  // 此處與影片示範不同
-    })
+    }).catch(error => {
+        return cb(null, false, req.flash('error_messages', '找不到使用者'))
+    }) 
 })
 
 module.exports = passport
