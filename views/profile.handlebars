@@ -1,0 +1,13 @@
+<div class="profile-panel d-flex align-items-center">
+    <img class="mr-3" style="width: 400px; height: 400px;" src="{{ user.image }}" alt="">
+    
+    <div class="detail d-flex flex-column">
+        <h5>{{ user.name }}</h5>
+        <p>{{ user.email }}</p>
+        <a href="/users/{{ user.id }}/edit">
+            <button type="button" class="btn btn-primary">
+                Edit
+            </button>
+        </a>
+    </div>
+</div>

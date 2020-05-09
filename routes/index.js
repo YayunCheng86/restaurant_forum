@@ -21,6 +21,14 @@ module.exports = (app, passport) => {
         res.redirect('/signin')
     }
 
+    const userAuth = (req, res, next) => {
+        if (req.user.id !== Number(req.params.id)) {
+            req.flash('error_messages', '無法編輯其他人的資料！')
+            return res.redirect(`/users/${req.user.id}`)
+        }
+        next()
+    }
+
     // home路由
     app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
     app.get('/restaurants', authenticated, restController.getRestaurants)
@@ -32,7 +40,7 @@ module.exports = (app, passport) => {
     app.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
     app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
     app.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
-    app.put('/admin/restaurants/:id', authenticatedAdmin,upload.single('image'),  adminController.putRestaurant)
+    app.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
     app.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
     app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
     app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
@@ -45,6 +53,11 @@ module.exports = (app, passport) => {
     // 前台
     app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
+    // 前台 user profile
+    app.get('/users/:id', authenticated, userController.getUser)
+    app.get('/users/:id/edit', authenticated, userAuth, userController.editUser)
+    app.put('/users/:id', authenticated, userAuth, upload.single('image'), userController.putUser)
+    
     // 留言
     app.post('/comments', authenticated, commentController.postComment)
     app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
