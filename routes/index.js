@@ -54,9 +54,11 @@ module.exports = (app, passport) => {
     app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
     // user profile
+    app.get('/users/top', authenticated, userController.getTopUser)
     app.get('/users/:id', authenticated, userController.getUser)
     app.get('/users/:id/edit', authenticated, userAuth, userController.editUser)
     app.put('/users/:id', authenticated, userAuth, upload.single('image'), userController.putUser)
+    
     
     // 留言
     app.post('/comments', authenticated, commentController.postComment)
