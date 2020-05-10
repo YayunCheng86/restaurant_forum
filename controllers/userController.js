@@ -164,7 +164,7 @@ const userController = {
             }))
             // 依追蹤者人數排序清單
             users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-            return res.render('topUser', { users: users })
+            return res.render('topUsers', { users: users })
         })
     },
     addFollowing: (req, res) => {

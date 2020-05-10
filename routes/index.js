@@ -33,6 +33,7 @@ module.exports = (app, passport) => {
     app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
     app.get('/restaurants', authenticated, restController.getRestaurants)
     app.get('/restaurants/feeds', authenticated, restController.getFeeds)
+    app.get('/restaurants/top', authenticated, restController.getTopRestaurants)
     app.get('/restaurants/:id', authenticated, restController.getRestaurant)
     app.get('/restaurants/:id/dashboard', authenticated, restController.getDashBoard)
 
@@ -53,7 +54,7 @@ module.exports = (app, passport) => {
     app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
     app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
-    // user profile
+    // user、user profile
     app.get('/users/top', authenticated, userController.getTopUser)
     app.get('/users/:id', authenticated, userController.getUser)
     app.get('/users/:id/edit', authenticated, userAuth, userController.editUser)
