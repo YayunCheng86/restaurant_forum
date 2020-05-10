@@ -2,6 +2,7 @@ const db = require('../models')
 const User = db.User
 const Restaurant = db.Restaurant
 const Favorite = db.Favorite
+const Like = db.Like
 const Comment = db.Comment
 const bcrypt = require('bcryptjs')
 const fs = require('fs')
@@ -118,7 +119,33 @@ const userController = {
                     return res.redirect('back')
                 })
             })
-    }
+    },
+    addLike: (req, res) => {
+        return Like.create({
+            UserId: req.user.id,
+            RestaurantId: req.params.restaurantId
+        })
+        .then((restaurant) => {
+            return res.redirect('back')
+        })
+    },
+    removeLike: (req, res) => {
+        console.log(req.params.restaurantId, 'r.id')
+
+        return Like.findOne({
+            where: {
+                UserId: req.user.id,
+                RestaurantId: req.params.restaurantId
+            }
+        })
+        .then((like) => {
+            console.log(like)
+            like.destroy()
+            .then((restaurant) => {
+                return res.redirect('back')
+            })
+        })
+    },
 }
 
 module.exports = userController
