@@ -50,7 +50,13 @@ const userController = {
         res.redirect('/signin')
     },
     getUser: (req, res) => {
-        User.findByPk(req.params.id)
+        User.findByPk(req.params.id, {
+            include: [
+                { model: Restaurant, as: 'FavoritedRestaurants' },
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' },            
+            ]
+        })
         .then(user => {
             Comment.findAll({
                 where: { UserId: req.params.id },
@@ -59,7 +65,19 @@ const userController = {
                 include: [Restaurant]
             }).then(comments => {
                 console.log(comments)
-                return res.render('profile', { user: user.toJSON(), comments })
+                user.FavoritedRestaurants.map(r => r.datavalues)
+                console.log(user.FavoritedRestaurants)
+                console.log(user.Followers)
+                console.log(user.Followings)
+                return res.render('profile', {
+                    user: user.toJSON(),
+                    FavoritedRestaurants: user.FavoritedRestaurants.toJSON(),
+                    comments,
+                    comments_length: comments.length,
+                    FavoritedRestaurants_length: user.FavoritedRestaurants.length,
+                    Followers_length: user.Followers.length,
+                    Followings_length: user.Followings.length
+                })
             })
         })
     },

@@ -4,28 +4,79 @@
     <div class="detail d-flex flex-column">
         <h5>{{ user.name }}</h5>
         <p>{{ user.email }}</p>
+        <p> {{comments_length}} 已評論餐廳 </p>
+        <p> {{FavoritedRestaurants_length}} 收藏的餐廳</p>
+        <p> {{Followers_length}} followings (追蹤者)</p>
+        <p> {{Followings_length}} followers (追隨者)</p>
+
         <a href="/users/{{ user.id }}/edit">
             <button type="button" class="btn btn-primary">
                 Edit
             </button>
         </a>
+
     </div>
 </div>
 
-<div class="commented-restaurants mt-5 row d-flex flex-column">
-    <h4 class="col-12">{{user.name}} 已評論過的餐廳：</h4>
-    <div class="row restaurants d-flex align-items-center"> 
-        {{#if comments }}
-        {{#each comments}}
-        <div class="d-flex flex-column col-2">
-            <a href="/restaurants/{{this.Restaurant.id}}">
-                <img style="width: auto; height:100px;" src="{{this.Restaurant.image}}" alt="">
-                <p>{{this.Restaurant.name}}</p>
-            </a>
+<div class="card-panel row">
+    <div class="card col-6">
+        <div class="card-header">
+            followings (追蹤者)
         </div>
-        {{/each}}
-        {{else}}
-        <div class="col-12 d-flex justify-content-center">尚未新增評論</div>
-        {{/if}}
-    </div>    
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+    <div class="card col-6">
+        <div class="card-header">
+            {{user.name}}已評論過的餐廳：
+        </div>
+        <div class="card-body">
+            <div class="row restaurants d-flex align-items-center">
+                {{#if comments }}
+                {{#each comments}}
+                <div class="d-flex flex-column col-2">
+                    <a href="/restaurants/{{this.Restaurant.id}}">
+                        <img style="width: auto; height:100px;" src="{{this.Restaurant.image}}" alt="">
+                        <p>{{this.Restaurant.name}}</p>
+                    </a>
+                </div>
+                {{/each}}
+                {{else}}
+                <div class="col-12 d-flex justify-content-center">尚未新增評論</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-6">
+        <div class="card-header">
+            fllowers (追蹤者)
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+    <div class="card col-6">
+        <div class="card-header">
+            收藏的餐廳
+        </div>
+        <div class="card-body">
+            {{#each FavoritedRestaurants}}
+            <div class="d-flex flex-column col-2">
+                <a href="/restaurants/{{this.Restaurant.id}}">
+                    <img style="width: auto; height:100px;" src="{{this.Restaurant.image}}" alt="">
+                    <p>{{this.Restaurant.name}}</p>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
 </div>
+
