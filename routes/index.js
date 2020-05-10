@@ -59,7 +59,6 @@ module.exports = (app, passport) => {
     app.get('/users/:id/edit', authenticated, userAuth, userController.editUser)
     app.put('/users/:id', authenticated, userAuth, upload.single('image'), userController.putUser)
     
-    
     // 留言
     app.post('/comments', authenticated, commentController.postComment)
     app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
@@ -71,6 +70,10 @@ module.exports = (app, passport) => {
     // Like
     app.post('/like/:restaurantId', authenticated, userController.addLike)
     app.delete('/like/:restaurantId', authenticated, userController.removeLike)
+
+    // followship
+    app.post('/following/:userId', authenticated, userController.addFollowing)
+    app.delete('/following/:userId', authenticated, userController.removeFollowing)
 
     // 註冊
     app.get('/signup', userController.signUpPage)
