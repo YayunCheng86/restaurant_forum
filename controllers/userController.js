@@ -64,15 +64,23 @@ const userController = {
                 nest: true,
                 include: [Restaurant]
             }).then(comments => {
-                console.log(comments)
-                user.FavoritedRestaurants.map(r => r.datavalues)
-                console.log(user.FavoritedRestaurants)
-                console.log(user.Followers)
-                console.log(user.Followings)
+                user.FavoritedRestaurants = user.FavoritedRestaurants.map(r => r.dataValues)
+                user.Followers = user.Followers.map(u => u.dataValues)
+                user.Followings = user.Followings.map(u => u.dataValues)
+
+                // console.log(comments)
+                // console.log(user.FavoritedRestaurants)
+                // console.log(user.Followers)
+                // console.log(user.Followings)
+
                 return res.render('profile', {
                     user: user.toJSON(),
-                    FavoritedRestaurants: user.FavoritedRestaurants.toJSON(),
-                    comments,
+                    // data
+                    FavoritedRestaurants: user.FavoritedRestaurants,
+                    Followers: user.Followers,
+                    Followings: user.Followings,
+                    comments: comments,
+                    // 數量
                     comments_length: comments.length,
                     FavoritedRestaurants_length: user.FavoritedRestaurants.length,
                     Followers_length: user.Followers.length,
