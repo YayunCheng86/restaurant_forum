@@ -24,6 +24,7 @@ app.use('/upload', express.static(__dirname + '/upload'))
 
 // body-parser
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 // method-override
 app.use(methodOverride('_method'))
