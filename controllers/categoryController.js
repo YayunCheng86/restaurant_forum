@@ -30,13 +30,14 @@ let categoryController = {
         })
     },
     deleteCategory: (req, res) => {
-        return Category.findByPk(req.params.id)
-            .then((category) => {
-                category.destroy()
-                    .then((category) => {
-                        res.redirect('/admin/categories')
-                    })
-            })
+        categoryService.deleteCategory(req, res, (data) => {
+            if (data['status'] === 'success') {
+                return res.redirect('/admin/categories')
+            } else {
+                req.flash('error_messages','Something went wrong! Go back to the last page and try again.')
+                res.redirect('back')   
+            }
+        })
     },
 }
 
