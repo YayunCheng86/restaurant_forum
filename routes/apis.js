@@ -4,6 +4,7 @@ const adminController = require('../controllers/api/adminController.js')
 const categoryController = require('../controllers/api/categoryController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+const userController = require('../controllers/api/userController.js')
 
 // 後台
 router.get('/admin/restaurants', adminController.getRestaurants)
@@ -15,5 +16,9 @@ router.put('/admin/restaurants/:id', upload.single('image'), adminController.put
 router.post('/admin/categories', categoryController.postCategory)
 router.put('/admin/categories/:id', categoryController.putCategory)
 router.delete('/admin/categories/:id', categoryController.deleteCategory)
+
+// user
+// JWT signin
+router.post('/signin', userController.signIn)
 
 module.exports = router
