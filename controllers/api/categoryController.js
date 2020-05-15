@@ -8,6 +8,11 @@ let categoryController = {
             return res.json(data)
         })
     },
+    postCategory: (req, res) => {
+        categoryService.postCategory(req, res, (data) => {
+            return res.json(data)
+        })
+    },
 }
 
 module.exports = categoryController

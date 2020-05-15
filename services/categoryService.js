@@ -20,6 +20,17 @@ let categoryService = {
             }
         })
     },
+    postCategory: (req, res, callback) => {
+        if (!req.body.name) {
+            return callback({ status: 'error', message: "name didn't exist" })
+        } else {
+            return Category.create({
+                name: req.body.name
+            }).then((category) => {
+                callback({ status: 'success', message: 'restaurant was successfully created' })
+            })
+        }
+    },
 }
 
 module.exports = categoryService
