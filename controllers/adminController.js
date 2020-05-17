@@ -14,14 +14,9 @@ const adminController = {
         })
     },
     createRestaurant: (req, res) => {
-        Category.findAll({
-            raw: true,
-            nest: true
-        }).then(categories => {
-            return res.render('admin/create', {
-                categories
-            })
-        })
+        adminService.createRestaurant(req, res, (data) => {
+            return res.render('admin/create', data)
+        }) 
     },
     postRestaurant: (req, res) => {
         adminService.postRestaurant(req, res, (data) => {
@@ -39,16 +34,8 @@ const adminController = {
         })
     },
     editRestaurant: (req, res) => {
-        Category.findAll({
-            raw: true,
-            nest: true
-        }).then(categories => {
-            return Restaurant.findByPk(req.params.id).then(restaurant => {
-                return res.render('admin/create', {
-                    categories: categories,
-                    restaurant: restaurant.toJSON()
-                })
-            })
+        adminService.editRestaurant(req, res, (data) => {
+            return res.render('admin/create', data)
         })
     },
     putRestaurant: (req, res) => {
@@ -64,34 +51,24 @@ const adminController = {
     deleteRestaurant: (req, res) => {
         adminService.deleteRestaurant(req, res, (data) => {
             if (data['status'] === 'success') {
+                req.flash('success_messages', data['message'])
                 return res.redirect('/admin/restaurants')
             }
         })
     },
     getUsers: (req, res) => {
-        return User.findAll({ raw: true })
-        .then(users => {
-            return res.render('admin/users', { users })
+        adminService.getUsers(req, res, (data) => {
+            return res.render('admin/users', data)
         })
     },
     putUsers: (req, res) => {
-        return User.findByPk(req.params.id)
-        .then(user => {
-            if(user.get().isAdmin === true) {
-                user.update({
-                    isAdmin: 0
-                }).then(user => {
-                    req.flash('success_messages', 'user was successfully updated')
-                    return res.redirect('/admin/users')
-                })    
-            } else {
-                user.update({
-                    isAdmin: 1
-                }).then(user => {
-                    req.flash('success_messages', 'user was successfully updated')
-                    return res.redirect('/admin/users')
-                })    
-            }     
+        adminService.putUsers(req, res, (data) => {
+            if (data['status'] !== 'success') {
+                req.flash('error_messages', 'Users update is failed.')
+                return res.redirect('back')
+            }
+            req.flash('success_messages', data['message'])
+            res.redirect('/admin/users')
         })
     }
 }

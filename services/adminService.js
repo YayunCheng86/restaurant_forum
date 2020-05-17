@@ -21,14 +21,13 @@ const adminService = {
             callback({ restaurant: restaurant.toJSON() })
         })
     },
-    deleteRestaurant: (req, res, callback) => {
-        return Restaurant.findByPk(req.params.id)
-            .then((restaurant) => {
-                restaurant.destroy()
-                    .then((restaurant) => {
-                        callback({ status: 'success', message: '' })
-                    })
-            })
+    createRestaurant: (req, res, callback) => {
+        return Category.findAll({
+            raw: true,
+            nest: true
+        }).then(categories => {
+            callback({ categories: categories })
+        })
     },
     postRestaurant: (req, res, callback) => {
         if (!req.body.name) {
@@ -105,6 +104,53 @@ const adminService = {
                 })
         }
     },
+    deleteRestaurant: (req, res, callback) => {
+        return Restaurant.findByPk(req.params.id)
+            .then((restaurant) => {
+                restaurant.destroy()
+                    .then((restaurant) => {
+                        callback({ status: 'success', message: 'The restaurant is deleted.' })
+                    })
+            })
+    },
+    editRestaurant: (req, res, callback) => {
+        Category.findAll({
+            raw: true,
+            nest: true
+        }).then(categories => {
+            return Restaurant.findByPk(req.params.id)
+                .then(restaurant => {
+                    callback({
+                        categories: categories,
+                        restaurant: restaurant.toJSON()
+                    })
+                })
+        })
+    },
+    getUsers: (req, res, callback) => {
+        return User.findAll({ raw: true })
+            .then(users => {
+                callback({ users: users })
+            })
+    },
+    putUsers: (req, res, callback) => {
+        return User.findByPk(req.params.id)
+            .then(user => {
+                if (user.get().isAdmin === true) {
+                    user.update({
+                        isAdmin: 0
+                    }).then(user => {
+                        callback({ status: 'success', message: 'user was successfully updated' })
+                    })
+                } else {
+                    user.update({
+                        isAdmin: 1
+                    }).then(user => {
+                        callback({ status: 'success', message: 'user was successfully updated' })
+                    })
+                }
+            })
+    }
 }    
 
 module.exports = adminService

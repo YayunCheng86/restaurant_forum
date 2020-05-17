@@ -40,7 +40,7 @@ router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
 router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 router.get('/restaurants/:id/dashboard', authenticated, restController.getDashBoard)
 
-//後台路由 
+//後台餐廳
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
 router.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
 router.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
@@ -49,8 +49,12 @@ router.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRest
 router.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
 router.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
 router.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
+
+// 後台user
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 router.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
+
+// 後台分類
 router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 router.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
 router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
